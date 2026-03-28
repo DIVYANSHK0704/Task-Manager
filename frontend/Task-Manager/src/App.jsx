@@ -7,7 +7,9 @@ import ManageTask from "./pages/Admin/ManageTask";
 import CreateTask from "./pages/Admin/CreateTask";
 import ManageUsers from "./pages/Admin/ManageUsers";
 import UserDashboard from "./pages/User/UserDashboard";
-import MyTasks from './pages/User/MyTasks'
+import MyTasks from './pages/User/MyTasks';
+import ViewTaskDetails from './pages/User/ViewTaskDetails';
+import PrivateRoute from "./routes/PrivateRoute";
 
 function App() {
   return (
@@ -18,7 +20,7 @@ function App() {
           <Route path="/signUp" element={<SignUp />} />
 
           {/*Admin Routes*/}
-          <Route element={<PrivateRouter allowedRoles={["admin"]} />}>
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/task" element={<ManageTask />} />
             <Route path="/admin/create-task" element={<CreateTask />} />
@@ -26,9 +28,10 @@ function App() {
           </Route>
 
           {/*User Routes*/}
-          <Route element={<PrivateRouter allowedRoles={["admin"]} />}>
+          <Route element={<PrivateRoute allowedRoles={["admin"]} />}>
             <Route path="/user/dashboard" element={<UserDashboard />} />
             <Route path="/user/my-task" element={<MyTasks />} />
+            <Route path="/user/task-details/:id" element={<ViewTaskDetails />} />
           </Route>
 
         </Routes>
