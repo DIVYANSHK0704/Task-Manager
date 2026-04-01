@@ -61,7 +61,8 @@ const registerUser =async (req,res) => {
 //@desc login user
 //@route post/api/auth/login
 //@access public
-const loginUser =async (req,res) => {   try {
+const loginUser =async (req,res) => {   
+    try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
@@ -90,19 +91,47 @@ const loginUser =async (req,res) => {   try {
     }};
 
 //@desc get user profile
-//@route post/api/auth/login
+//@route get/api/auth/profile
 //@access private(reqire jwt)
-const getUserProfile =async (req,res) => {   try {
-        
+const getUserProfile =async (req,res) => {   
+    try {
+      const user = await User.findById(req.user.id).select("-password");
+      if(!user){
+        return res.status(500).json({message : "server error", error: error.message});
+      } 
+
+      res.json(user);
     } catch (error) {
         res.status(500).json({message:"server error", error: error.message});
     }};
 
 //@desc update user profile
-//@route post/api/auth/login
+//@route post/api/auth/profile
 //@access private(require jwt)
 const updateUserProfile =async (req,res) => {   try {
-        
+    const user = await User.findById(req.user.id).select("-password");
+    if(!user)
+    {
+        return res.status(404).json({message : "user not found", error: error.message});
+    }
+    
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+
+    if(req.body.password){
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(req.body.password,salt);
+    }
+
+    const updateUser = await user.save();
+
+    res.json({
+        _id: updateUser._id,
+        name: updateUser.name,
+        email: updateUser.email,
+        role:updateUser.role,
+        token: generateToken(updateUser._id)
+    });
     } catch (error) {
         res.status(500).json({message:"server error", error: error.message});
     }};
