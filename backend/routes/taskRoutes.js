@@ -13,7 +13,7 @@ router.get("/:id",protect,getTaskById);
 router.post("/",protect,adminOnly,createTask);
 router.put("/:id",protect,updateTask);
 router.delete("/:id",protect,deleteTask);
-router.put("/:id/",protect,updateTaskStatus);
+router.put("/:id/status",protect,updateTaskStatus);
 router.put("/:id/",protect,updateTaskCheckList);
 
 module.exports = router;
