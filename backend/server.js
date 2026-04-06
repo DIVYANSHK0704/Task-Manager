@@ -26,7 +26,6 @@ app.use("/api/users",userRoutes);
 app.use("/api/tasks",taskRoutes);
 app.use("/api/report",reportRoutes);
 
-// Start server (CRITICAL FIX)
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, "0.0.0.0", () => {
