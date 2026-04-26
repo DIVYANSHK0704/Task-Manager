@@ -69,6 +69,9 @@ const exportUsersReport = async (req, res) => {
       "name email _id",
     );
 
+    const workbook = new excelJS.Workbook();
+    const worksheet = workbook.addWorksheet("Users Report");
+
     const userTaskMap = {};
 
     users.forEach((user) => {

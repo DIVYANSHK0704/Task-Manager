@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
 export const useUserAuth = () =>{
-    const {user,loading,cleanUser} = useContext(UserContext);
+    const {user,loading,clearUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -11,9 +11,9 @@ export const useUserAuth = () =>{
         if (user) return;
 
         if(!user){
-            cleanUser();
+            clearUser();
             navigate("/login");
         }
 
-    },[user,loading,cleanUser,navigate]);
+    },[user,loading,clearUser,navigate]);
 };
