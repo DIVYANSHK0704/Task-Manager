@@ -204,7 +204,7 @@ const Attachment = ({link,index,onClick}) => {
       <p className="text-xs text-black">{link}</p>
 
     </div>
-    <div className=""></div>
+
 
     <LuSquareArrowOutUpRight className="text-gray-400" />
   </div>
