@@ -1,7 +1,9 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-const path =require("path");
+const path = require("path");
+
 const connectDB = require("./config/db");
 
 const authRoutes = require("./routes/authRoutes");
@@ -14,20 +16,25 @@ const app = express();
 console.log("🚀 Starting server...");
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+app.use(cors({
+  origin: "https://task-manager-puce-nine-18.vercel.app",
+  credentials: true
+}));
 
+app.use(express.json());
 
 // Connect DB
 connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
-app.use("/api/users",userRoutes);
-app.use("/api/tasks",taskRoutes);
-app.use("/api/reports",reportRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/tasks", taskRoutes);
+app.use("/api/reports", reportRoutes);
 
-app.use("/uploads",express.static(path.join(__dirname,"uploads")));
+// Static Uploads
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, "0.0.0.0", () => {
